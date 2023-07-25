@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,16 +12,17 @@ public class Question : MonoBehaviour
 
     public string tutorialText;
     public int point;
+    public int level;
 
     [SerializeField] Slider questionSlider,timeSlider;
     [SerializeField] Text questionCountText,timeText,pointText;
     [SerializeField] Text questionTitleText;
 
-    bool isFinish=false;
+    public bool isFinish=false;
     // Start is called before the first frame update
     private void Awake()
     {
-        Init();
+    
     }
     void Start()
     {
@@ -33,15 +35,15 @@ public class Question : MonoBehaviour
         if (isFinish)
             return;
 
-        questionTime += Time.deltaTime;
-        if (questionTime >= maxQuestionTime)
+        questionTime -= Time.deltaTime;
+        if (questionTime <= 0)
             FinishQuestion();
 
         SetHeader();
     }
-    private void Init()
+    public void Init()
     {
-        questionTime = 0;
+        questionTime = maxQuestionTime;
         isFinish = false;
         questionTitleText.text = tutorialText;
     }
