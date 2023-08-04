@@ -3989,12 +3989,14 @@ MonoBehaviour:
   questionTime: 0
   tutorialText: "HIZLA KIRMIZI DA\u0130REYE DOKUN"
   point: 0
+  level: 0
   questionSlider: {fileID: 8129338111560768995}
   timeSlider: {fileID: 3346023723111802940}
   questionCountText: {fileID: 9174764296804205781}
   timeText: {fileID: 9113381840316698940}
   pointText: {fileID: 6737194482907592112}
   questionTitleText: {fileID: 6985270107673646597}
+  isFinish: 0
 --- !u!114 &7212522272918385562
 MonoBehaviour:
   m_ObjectHideFlags: 0

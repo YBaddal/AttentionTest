@@ -41,7 +41,7 @@ public class Game1001 : MonoBehaviour
     }
     void Init()
     {
-        question.level = level;
+        level = question.level ;
         question.tutorialText = levelTexts[level];
         question.maxQuestionTime = levelTimes[level];
         question.Init();
@@ -83,6 +83,9 @@ public class Game1001 : MonoBehaviour
                 PrepareLevel(2, 3);
                 break;
             case 9:
+                PrepareLevel(3, 3);
+                break;
+            default:
                 PrepareLevel(3, 3);
                 break;
         }

@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.U2D.Path.GUIFramework;
 using UnityEngine;
 using Random = UnityEngine.Random;
 

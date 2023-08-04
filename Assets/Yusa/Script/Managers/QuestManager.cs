@@ -33,31 +33,28 @@ public class QuestManager : MonoBehaviour
             selectedQuestionList.Add(questionList[i]);
         }
         currentQuestion = 0;
-
-        SetQuestionScreen();
     }
-    void SetQuestionScreen()
+    public void FinishScreen()
     {
-        questionCountText.text = "Soru " + (int)(currentQuestion + 1);
-        questionTutorialText.text = selectedQuestionList[currentQuestion].tutorialText;
+        GameManager.instance.OpenPage(4);
     }
     public void OpenTest()
     {
-        SetQuestionScreen();
         selectedQuestionList[currentQuestion].gameObject.SetActive(true);
     }
     public void NextQuestion()
     {
+        GameManager.instance.CloseAllPage();
         selectedQuestionList[currentQuestion].gameObject.SetActive(false);
         currentQuestion++;
         if (currentQuestion >= selectedQuestionList.Count)
         {
             //FinishTest
-            GameManager.instance.OpenPage(4);
+            GameManager.instance.Restart();
         }
         else
         {
-            SetQuestionScreen();
+            OpenTest();
         }
     }
 }

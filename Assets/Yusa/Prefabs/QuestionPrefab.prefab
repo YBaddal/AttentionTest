@@ -673,8 +673,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1605212545650038587}
-  - {fileID: 1605212545952098038}
   - {fileID: 1605212546890582850}
+  - {fileID: 1605212545952098038}
   - {fileID: 1605212546563485398}
   m_Father: {fileID: 1605212546059959757}
   m_RootOrder: 2
@@ -682,7 +682,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -50}
-  m_SizeDelta: {x: 1480, y: 897}
+  m_SizeDelta: {x: 1481, y: 897}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1605212545624925765
 GameObject:
@@ -798,7 +798,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1480, y: 782.654}
+  m_SizeDelta: {x: 1481, y: 897}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1605212545650038585
 CanvasRenderer:
@@ -1459,12 +1459,12 @@ RectTransform:
   - {fileID: 1605212545796934688}
   - {fileID: 1605212545868560231}
   m_Father: {fileID: 1605212545346216335}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -75}
-  m_SizeDelta: {x: 1480, y: 100}
+  m_AnchoredPosition: {x: 0, y: -30}
+  m_SizeDelta: {x: 1481, y: 100}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &1605212545952098036
 CanvasRenderer:
@@ -1530,7 +1530,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1605212546059959758}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1543,7 +1543,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1820, y: 980}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1605212546059959745
 CanvasRenderer:
@@ -1601,12 +1601,14 @@ MonoBehaviour:
   questionTime: 0
   tutorialText: "HIZLA KIRMIZI DA\u0130REYE DOKUN"
   point: 0
+  level: 0
   questionSlider: {fileID: 1605212546491565467}
   timeSlider: {fileID: 1605212545868560229}
   questionCountText: {fileID: 1605212546269074089}
   timeText: {fileID: 1605212545106380683}
   pointText: {fileID: 1605212545027300150}
   questionTitleText: {fileID: 1605212545624925819}
+  isFinish: 0
 --- !u!1 &1605212546251594713
 GameObject:
   m_ObjectHideFlags: 0
@@ -1941,7 +1943,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -1.242, y: 95}
+  m_AnchoredPosition: {x: -1.5, y: 41.5}
   m_SizeDelta: {x: 1387.855, y: 70.45}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &1605212546563485396
@@ -2121,12 +2123,12 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1605212545346216335}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -100, y: 500}
+  m_AnchoredPosition: {x: 0, y: -40}
+  m_SizeDelta: {x: -100, y: 550}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1605212546904770768
 GameObject:
