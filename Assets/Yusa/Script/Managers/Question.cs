@@ -16,7 +16,7 @@ public class Question : MonoBehaviour
 
     [SerializeField] Slider questionSlider,timeSlider;
     [SerializeField] Text questionCountText,timeText,pointText;
-    [SerializeField] Text questionTitleText;
+    public Text questionTitleText;
 
     public bool isFinish=false;
     public bool isLap;
@@ -90,19 +90,38 @@ public class Question : MonoBehaviour
     }
     public void FullScreen()
     {
-        SetFullScreen(!Screen.fullScreen);
+        //SetFullScreen(!Screen.fullScreen);
+        if (Screen.fullScreen) // Eðer tam ekran zaten açýksa
+        {
+            Screen.fullScreen = false; // Tam ekrandan çýk
+            transform.localScale = Vector3.one;
+            transform.localPosition = Vector3.zero;
+        }
+        else
+        {
+            Screen.fullScreen = true; // Tam ekrana geç
+            transform.localScale = new Vector3(1.3f, 1.3f, 1);
+            transform.localPosition = new Vector3(0, 50, 0);
+        }
     }
     public void SetFullScreen(bool isFullScreen)
     {
         if (isFullScreen)
         {
             // Tam ekran modunu aç.
-            Screen.fullScreenMode = FullScreenMode.ExclusiveFullScreen;
+            //Screen.fullScreenMode = FullScreenMode.ExclusiveFullScreen;  
+            //Application.ExternalEval("unityInstance.SetFullscreen(1)");
+            Screen.fullScreen = true;
+            transform.localScale = new Vector3(1.3f, 1.3f, 1);
+            transform.localPosition = new Vector3(0,50,0);
+            
         }
         else
         {
             // Tam ekran modunu kapat ve oyunu normal boyutta çalýþtýr.
             Screen.fullScreenMode = FullScreenMode.Windowed;
+            transform.localScale = Vector3.one;
+            transform.localPosition = Vector3.zero;
         }
     }
     public void Help()

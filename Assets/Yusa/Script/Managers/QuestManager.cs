@@ -7,7 +7,7 @@ public class QuestManager : MonoBehaviour
 {
     public List<Question> questionList;
     public List<Question> selectedQuestionList;
-    public int currentQuestion,totalQuestion,maxQuestionTime;
+    public int currentQuestion,totalQuestion;
 
     public Text questionCountText, questionTutorialText;
     // Start is called before the first frame update
@@ -29,7 +29,6 @@ public class QuestManager : MonoBehaviour
         {
             questionList[i].currentQuestion = i;
             questionList[i].totalQuestion = totalQuestion;
-            questionList[i].maxQuestionTime = maxQuestionTime;
             selectedQuestionList.Add(questionList[i]);
         }
         currentQuestion = 0;

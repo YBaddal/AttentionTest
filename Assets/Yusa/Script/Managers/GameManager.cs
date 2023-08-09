@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.UI;
 public class GameManager : MonoBehaviour
@@ -9,7 +10,8 @@ public class GameManager : MonoBehaviour
     public QuestManager questManager;
     public List<GameObject> pages;
     // Start is called before the first frame update
-
+    [DllImport("__Internal")]
+    private static extern void FScreen(); 
     private void Awake()
     {
         if (instance == null)
@@ -80,6 +82,10 @@ public class GameManager : MonoBehaviour
     public void DikkatTesti()
     {
         OpenPage(2);
+    }
+    public void FullScreen()
+    {
+        FScreen();
     }
     public void Restart()
     {
