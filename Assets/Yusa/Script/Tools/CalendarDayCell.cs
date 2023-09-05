@@ -4,19 +4,27 @@ using UnityEngine;
 using UnityEngine.UI;
 public class CalendarDayCell : MonoBehaviour
 {
-    Image image;
-    public Color emptyColor, correctColor, failColor;
-    public Text dayText;
-    public bool isFilled,isEmpty,isWeekend;
-    int index;
+    [SerializeField] Image image;
+    [SerializeField] Color emptyColor, correctColor, failColor;
+    [SerializeField] Text dayText;
+    [SerializeField] bool isWeekend;
     // Start is called before the first frame update
     void Start()
     {
         image = GetComponent<Image>();
-        index = transform.GetSiblingIndex();
+    }
 
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+    public void SetCell(bool isFilled,bool isEmpty,int index,bool isFuture=false)
+    {
+        dayText.text = (index+1).ToString();
+        
 
-        if(isFilled)
+        if (isFilled)
             image.color = correctColor;
         else
             image.color = failColor;
@@ -25,20 +33,20 @@ public class CalendarDayCell : MonoBehaviour
         if (isEmpty)
         {
             image.color = emptyColor;
-            dayText.color = Color.gray;
+            dayText.text = "";
         }
 
         if (isWeekend)
+        {
+            image.color = emptyColor;
             dayText.color = failColor;
+        }
+        else if (isFuture)
+        {
+            image.color = emptyColor;
+            dayText.color = Color.gray;
+        }
 
-        if(index!=0 && index<=31)
-            dayText.text = index.ToString();
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

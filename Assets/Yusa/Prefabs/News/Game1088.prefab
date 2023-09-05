@@ -2730,7 +2730,7 @@ GameObject:
   - component: {fileID: 4155115382624227313}
   - component: {fileID: 4155115382624227312}
   m_Layer: 5
-  m_Name: Game1088
+  m_Name: game1088
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

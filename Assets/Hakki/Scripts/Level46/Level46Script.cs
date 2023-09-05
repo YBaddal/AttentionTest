@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Transactions;
 using TMPro;
-using UnityEditor.U2D.Path.GUIFramework;
 using UnityEngine;
 
 public class Level46Script : MonoBehaviour

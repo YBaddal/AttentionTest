@@ -5,34 +5,43 @@ using System.Text;
 
 public enum EndPoint
 {
-   login
+   login,
+   addScore,
+   getCalendar,
+   getWeekly,
+   getDaily
 }
 
 public class PostCtrl
 {
-    string server = "https://unity-api.onrender.com/";
-
-    string LoginEndpoint = "/getuser";
-    
-
-
     public UnityWebRequest resultObj;
+    string server = "https://www.semvural.com/benego";
+
+    string LoginEndpoint = "/login.php";
+    string AddScoreEndpoint = "/get-data.php";
+    string GetCalendarEndpoint = "/getcalendar.php";
+    string GetWeeklyEndpoint = "/getweek.php";
+    string getDailyEndpoint = "/getdailygames.php";
+
 
  	public string GetEndPointURL (EndPoint endPointType){
 		switch (endPointType) {
 			case EndPoint.login: return server + LoginEndpoint;
-          
-
+            case EndPoint.addScore: return server + AddScoreEndpoint;
+            case EndPoint.getCalendar: return server + GetCalendarEndpoint;
+            case EndPoint.getWeekly: return server + GetWeeklyEndpoint;
+            case EndPoint.getDaily: return server + getDailyEndpoint;
             default:
 				return "";
 		}
 	}
        
 
-	public IEnumerator postData(EndPoint endPointType, string jsonData){
-
-		string url = GetEndPointURL(endPointType);
-		UnityWebRequest request = new UnityWebRequest(url, "POST");
+	public IEnumerator postData(EndPoint endPointType, string jsonData)
+    {
+        string url = GetEndPointURL(endPointType);
+    
+        UnityWebRequest request = new UnityWebRequest(url, "POST");
 		byte[] bodyRaw = Encoding.UTF8.GetBytes(jsonData);
 		request.uploadHandler = (UploadHandler) new UploadHandlerRaw(bodyRaw);
         //request.SetRequestHeader("Authorization", "Bearer " + PlayerPrefs.GetString("Token"));
@@ -43,23 +52,19 @@ public class PostCtrl
         yield return request.SendWebRequest();
 		resultObj = request;
 
-        //Debug.Log(request);
-
         if (request.isNetworkError)
 		{
-			//Debug.Log(request.error);
-		}
+            Debug.LogError("\nUrl:"+url+"\nRequest:"+jsonData + "\nResponse:"+request.error);
+        }
 		else
 		{
-            //Debug.Log(request.downloadHandler.text);
+            Debug.Log("\nUrl:" + url + "\nRequest:" + jsonData + "\nResponse:" + request.downloadHandler.text);
         }
     }
     public IEnumerator gettData(EndPoint endPointType, string jsonData)
     {
-
         string url = GetEndPointURL(endPointType)+jsonData;
 
-        
         UnityWebRequest request = new UnityWebRequest(url, "GET");
         //request.SetRequestHeader("Authorization", "Bearer " + PlayerPrefs.GetString("Token"));
         request.downloadHandler = (DownloadHandler)new DownloadHandlerBuffer();
@@ -68,15 +73,13 @@ public class PostCtrl
         yield return request.Send();
         resultObj = request;
 
-        //Debug.Log(request);
-
         if (request.isNetworkError)
         {
-            //Debug.Log(request.error);
+            Debug.LogError("\nUrl:" + url + "\nRequest:" + jsonData + "\nResponse:" + request.error);
         }
         else
         {
-            //Debug.Log(request.downloadHandler.text);
+            Debug.Log("\nUrl:" + url + "\nRequest:" + jsonData + "\nResponse:" + request.downloadHandler.text);
         }
     }
 

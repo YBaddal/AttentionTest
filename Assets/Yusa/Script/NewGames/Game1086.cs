@@ -22,11 +22,14 @@ public class Game1086 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+       
+    }
+    private void OnEnable()
+    {
         question = GetComponent<Question>();
         Init();
         SetLevel();
     }
-
     void EarnPoint()
     {
         question.point += point;

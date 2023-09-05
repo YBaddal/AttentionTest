@@ -572,7 +572,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "YANLI\u015E"
+  m_Text: FARKLI
 --- !u!1 &2684752937008112916
 GameObject:
   m_ObjectHideFlags: 0
@@ -651,7 +651,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "DO\u011ERU"
+  m_Text: AYNI
 --- !u!1 &2684752937110763574
 GameObject:
   m_ObjectHideFlags: 0
@@ -1411,7 +1411,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 25, y: -25.000122}
+  m_AnchoredPosition: {x: 25, y: -25}
   m_SizeDelta: {x: 255, y: 37}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &8093717757784315063
@@ -2326,7 +2326,7 @@ GameObject:
   - component: {fileID: 8093717758637453060}
   - component: {fileID: 8093717758637453059}
   m_Layer: 5
-  m_Name: Game1003
+  m_Name: game1003
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2399,7 +2399,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8093717758637453061}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 956d4b0a6e8981942b6fb1e157a3d8e0, type: 3}
   m_Name: 

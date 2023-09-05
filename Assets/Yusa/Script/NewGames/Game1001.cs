@@ -22,11 +22,14 @@ public class Game1001 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+    }
+    private void OnEnable()
+    {
         question = GetComponent<Question>();
         Init();
         WaitForNext();
     }
-
     // Update is called once per frame
     void FixedUpdate()
     {

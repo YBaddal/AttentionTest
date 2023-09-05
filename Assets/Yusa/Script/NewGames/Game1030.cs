@@ -20,12 +20,15 @@ public class Game1030 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+       
+    }
+    private void OnEnable()
+    {
         question = GetComponent<Question>();
         Init();
-        arrowColor = UnityEngine.Random.RandomRange(0, arrows.Count-1);
+        arrowColor = UnityEngine.Random.RandomRange(0, arrows.Count - 1);
         SetLevel();
     }
-
     void EarnPoint()
     {
         question.point += point;

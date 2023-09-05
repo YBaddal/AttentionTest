@@ -22,11 +22,14 @@ public class Game1003 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+    }
+     private void OnEnable()
+    {
         question = GetComponent<Question>();
         Init();
         SetLevel();
     }
-
     public void OnPressCorrect()
     {
         CloseAll();

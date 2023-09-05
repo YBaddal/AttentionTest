@@ -2,16 +2,19 @@ using Newtonsoft.Json;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    public User user;
     public QuestManager questManager;
+    public ProfileManager profileManager;
+    public FinishScreenManager finishScreenManager;
     public List<GameObject> pages;
     // Start is called before the first frame update
-    [DllImport("__Internal")]
-    private static extern void FScreen(); 
+
     private void Awake()
     {
         if (instance == null)
@@ -20,81 +23,50 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Pause()
     {
-        
+        questManager.selectedQuestionList[questManager.currentQuestion].enabled = false;
+
+        OpenPage(Page.Pause);
     }
-    public void Login(InputField input)
+    public void WaitForResume()
     {
-        //Dummy data
-        //switch (input.text)
-        //{
-        //    case "11111111111":
-        //        PlayerPrefs.SetInt("Level", 0);
-        //        PlayerPrefs.SetString("NameSurname", "Ahmet Demir");
-        //        PlayerPrefs.SetString("Class", "1 / C");
-
-        //        break;
-        //    case "22222222222":
-        //        PlayerPrefs.SetInt("Level", 1);
-        //        PlayerPrefs.SetString("NameSurname", "Mehmet Tekir");
-        //        PlayerPrefs.SetString("Class", "6 / E");
-        //        break;
-        //    case "33333333333":
-        //        PlayerPrefs.SetInt("Level", 2);
-        //        PlayerPrefs.SetString("NameSurname", "Can Koþar");
-        //        PlayerPrefs.SetString("Class", "11 / H");
-        //        break;
-        //    default:
-        //        PlayerPrefs.SetInt("Level", 0);
-        //        PlayerPrefs.SetString("NameSurname", "Yuþa Baddal");
-        //        PlayerPrefs.SetString("Class", "3 / B");
-        //        break;
-        //}
-
-        //OpenPage(1);
-        StartCoroutine(PostLogin(new LoginModel { tc_no=input.text}));
+        OpenPage(Page.Loading);
+        Invoke("Resume", 3);
     }
-    public IEnumerator PostLogin(LoginModel data)
+    public void Resume()
     {
-        Debug.Log(JsonConvert.SerializeObject(data));
-
-        PostCtrl post = new PostCtrl();
-        yield return StartCoroutine(post.postData(EndPoint.login, JsonConvert.SerializeObject(data)));
-        Debug.Log(post.resultObj.downloadHandler.text);
-
-        if (post.resultObj.responseCode != 200)
-        {
-            //Error;
-        }
-        else //on server success
-        {
-            //var resp = JsonConvert.DeserializeObject<ResponseModel>(post.resultObj.downloadHandler.text);
-            OpenPage(1);
-
-        }
+        CloseAllPage();
+        questManager.selectedQuestionList[questManager.currentQuestion].enabled = true;
     }
-
-    public void DikkatTesti()
+    public void OpenReport()
     {
-        OpenPage(2);
+        pages[(int)Page.Report].gameObject.SetActive(true);
+        var inputs = pages[(int)Page.Report].GetComponentsInChildren<InputField>();
+        foreach (var input in inputs)
+            input.text = "";
+    }
+    public void SendReport()
+    {
+        var inputs = pages[(int)Page.Report].GetComponentsInChildren<InputField>();
+        foreach (var input in inputs)
+            Debug.Log(input.text);
     }
     public void FullScreen()
     {
-        FScreen();
+        
     }
     public void Restart()
     {
-        Application.LoadLevel(0);
+        questManager.CloseAll();
+        OpenPage(Page.Main);
     }
-    public void OpenPage(int page)
+    public void OpenPage(Page page)
     {
         CloseAllPage();
-        pages[page].SetActive(true);
+        pages[(int)page].SetActive(true);
     }
     public void CloseAllPage()
     {
@@ -104,4 +76,15 @@ public class GameManager : MonoBehaviour
         }
     }
    
+}
+public enum Page
+{
+    Login = 0,
+    Main = 1,
+    QuizFinish = 2,
+    Pause = 3,
+    Report = 4,
+    HowTo = 5,
+    Loading = 6,
+    Finish = 7
 }

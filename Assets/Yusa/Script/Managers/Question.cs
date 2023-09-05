@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -64,7 +65,13 @@ public class Question : MonoBehaviour
     public void FinishQuestion()
     {
         isFinish = true;
-        GameManager.instance.questManager.FinishScreen();
+        StartCoroutine(PostScore(new PostScoreModel { 
+        UserId=GameManager.instance.user.userId,
+        date=DateTime.Now.ToShortDateString(),
+        level=level.ToString(),
+        score=point.ToString(),
+        game=gameObject.name        
+        }));
     }
     void SetHeader()
     {
@@ -126,6 +133,14 @@ public class Question : MonoBehaviour
     }
     public void Help()
     {
+        GameManager.instance.Pause();
+    }
 
+    public IEnumerator PostScore(PostScoreModel data)
+    {
+
+        PostCtrl post = new PostCtrl();
+        yield return StartCoroutine(post.postData(EndPoint.addScore, JsonConvert.SerializeObject(data)));
+        GameManager.instance.questManager.FinishScreen();
     }
 }
