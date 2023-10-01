@@ -40,27 +40,40 @@ public class Game1045 : MonoBehaviour
         switch (level)
         {
             case 0:
-                PrepareLevel(4,4,1,5);
+                PrepareLevel(4, 4, 1, 5);
                 break;
             case 1:
+                PrepareLevel(4, 5, 1, 5);
                 break;
             case 2:
+                PrepareLevel(5, 5, 3, 5);
                 break;
             case 3:
+                PrepareLevel(5, 6, 3, 5);
                 break;
             case 4:
+                PrepareLevel(5, 7, 1, 10);
                 break;
             case 5:
+                PrepareLevel(6, 6, 3, 10);
                 break;
             case 6:
+                PrepareLevel(6, 6, 1, 10);
                 break;
             case 7:
+                PrepareLevel(6, 7, 6, 12);
                 break;
             case 8:
+                PrepareLevel(6, 8, 6, 15);
                 break;
             case 9:
+                PrepareLevel(6, 8, 6, 15);
+                break;
+            case 10:
+                PrepareLevel(6, 8, 6, 15);
                 break;
             default:
+                PrepareLevel(6, 6, 1, 5);
                 break;
         }
     }

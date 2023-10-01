@@ -15,6 +15,7 @@ public class QuestManager : MonoBehaviour
     public Text questionCountText, questionTutorialText;
     public Image howToImg;
     public Text howToText;
+    public RecordResponse dailyGames;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,18 +33,18 @@ public class QuestManager : MonoBehaviour
         }
         else //on server success
         {
-            var resp = JsonConvert.DeserializeObject<RecordResponse>(post.resultObj.downloadHandler.text);
-            SetQuestionList(resp);
+            dailyGames = JsonConvert.DeserializeObject<RecordResponse>(post.resultObj.downloadHandler.text);
+            SetQuestionList();
         }
     }
-    void SetQuestionList(RecordResponse resp) 
+    void SetQuestionList() 
     {
         selectedQuestionList = new List<Question>();
         List<int> rndList = new List<int>();
 
-        while (rndList.Count < resp.games.Count)
+        while (rndList.Count < dailyGames.games.Count)
         {
-            int randomNumber = UnityEngine.Random.RandomRange(0, resp.games.Count);
+            int randomNumber = UnityEngine.Random.RandomRange(0, dailyGames.games.Count);
 
             if (!rndList.Contains(randomNumber))
             {
@@ -51,20 +52,20 @@ public class QuestManager : MonoBehaviour
             }
         }
 
-        for (int i = 0; i < resp.games.Count; i++)
+        for (int i = 0; i < dailyGames.games.Count; i++)
         {
-            var selected = questionList.FirstOrDefault(x => x.gameObject.name == resp.games[i].game);
+            var selected = questionList.FirstOrDefault(x => x.gameObject.name == dailyGames.games[i].game);
             if (selected != null)
             {
                 selected.currentQuestion = i;
-                selected.totalQuestion = resp.games.Count;
-                selected.level = resp.games[i].level;
+                selected.totalQuestion = dailyGames.games.Count;
+                selected.level = dailyGames.games[i].level;
                 selectedQuestionList.Add(selected);
             }
             else
             {
                 questionList[rndList[i]].currentQuestion = i;
-                questionList[rndList[i]].totalQuestion = resp.games.Count;
+                questionList[rndList[i]].totalQuestion = dailyGames.games.Count;
                 selectedQuestionList.Add(questionList[rndList[i]]);
             }
 
@@ -93,12 +94,14 @@ public class QuestManager : MonoBehaviour
     {
         selectedQuestionList[currentQuestion].gameObject.SetActive(true);
 
-        //if (howToModelList.Count <= currentQuestion)
-        //    return;
-        int index = questionList.IndexOf(selectedQuestionList[currentQuestion]);
-        howToImg.sprite = howToModelList[index].sprite;
-        howToText.text = howToModelList[index].descriptions;
-        howToImg.transform.parent.parent.gameObject.SetActive(true);
+        if (selectedQuestionList[currentQuestion].gameObject.name.Contains("game"))
+        {
+            int index = questionList.IndexOf(selectedQuestionList[currentQuestion]);
+            howToImg.sprite = howToModelList[index].sprite;
+            howToText.text = howToModelList[index].descriptions;
+            howToImg.transform.parent.parent.gameObject.SetActive(true);
+        }
+
     }
     void FinishTest()
     {
@@ -112,6 +115,7 @@ public class QuestManager : MonoBehaviour
         if (currentQuestion >= selectedQuestionList.Count)
         {
             FinishTest();
+            currentQuestion = 0;
         }
         else
         {

@@ -6,6 +6,7 @@ public class User : UserRequest
     public string school;
     public int grade;
     public string branch;
+    public int avatar;
 }
 [System.Serializable]
 public class UserRequest

@@ -9,7 +9,10 @@ public enum EndPoint
    addScore,
    getCalendar,
    getWeekly,
-   getDaily
+   getDaily,
+   postReport,
+   postFeedback,
+   getLeaderboard
 }
 
 public class PostCtrl
@@ -21,16 +24,23 @@ public class PostCtrl
     string AddScoreEndpoint = "/get-data.php";
     string GetCalendarEndpoint = "/getcalendar.php";
     string GetWeeklyEndpoint = "/getweek.php";
-    string getDailyEndpoint = "/getdailygames.php";
+    string GetDailyEndpoint = "/getdailygames.php";
+    string PostReportEndpoint = "/report.php";
+    string PostFeedbackEndpoint = "/feedback.php";
+    string GetLeaderboardEndpoint = "/leaderboard.php";
 
 
- 	public string GetEndPointURL (EndPoint endPointType){
+    public string GetEndPointURL (EndPoint endPointType){
 		switch (endPointType) {
 			case EndPoint.login: return server + LoginEndpoint;
             case EndPoint.addScore: return server + AddScoreEndpoint;
             case EndPoint.getCalendar: return server + GetCalendarEndpoint;
             case EndPoint.getWeekly: return server + GetWeeklyEndpoint;
-            case EndPoint.getDaily: return server + getDailyEndpoint;
+            case EndPoint.getDaily: return server + GetDailyEndpoint;
+            case EndPoint.postReport: return server + PostReportEndpoint;
+            case EndPoint.postFeedback: return server + PostFeedbackEndpoint;
+            case EndPoint.getLeaderboard: return server + GetLeaderboardEndpoint;
+
             default:
 				return "";
 		}

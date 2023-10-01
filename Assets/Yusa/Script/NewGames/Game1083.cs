@@ -44,26 +44,26 @@ public class Game1083 : MonoBehaviour
         switch (level)
         {
             case 0:
-                PrepareLevel(21, 0, 50);
+                PrepareLevel(21, 0, 50, true);
                 break;
             case 1:
-                PrepareLevel(21, 0, 50);
+                PrepareLevel(21, 0, 50, false);
                 break;
             case 2:
-                PrepareLevel(20, 0, 50);
+                PrepareLevel(20, 0, 50, true);
                 break;
             case 3:
-                PrepareLevel(20, 0, 50);
+                PrepareLevel(20, 0, 50, false);
                 break;
             case 4:
-                PrepareLevel(23, 0, 50);
+                PrepareLevel(23, 0, 50, true);
                 break;
             default:
-                PrepareLevel(23, 0, 50);
+                PrepareLevel(23, 0, 50, false);
                 break;
         }
     }
-    void PrepareLevel(int count,int min,int max)
+    void PrepareLevel(int count,int min,int max,bool isAllSame)
     {
         while (selectedLeft.Count < count)
         {
@@ -74,15 +74,37 @@ public class Game1083 : MonoBehaviour
                 selectedLeft.Add(randomNumber); 
             }
         }
-        while (selectedRight.Count < count)
+        if (isAllSame)
         {
-            int randomNumber = UnityEngine.Random.RandomRange(min, max);
-
-            if (!selectedRight.Contains(randomNumber))
+            selectedRight=selectedLeft;
+            bool diff = false;
+            while (!diff)
             {
-                selectedRight.Add(randomNumber);
+                int rnd = UnityEngine.Random.RandomRange(min, selectedLeft.Count);
+
+                if (!selectedLeft.Contains(rnd))
+                {
+                    selectedRight[0] = rnd;
+                    diff = true;
+                }
             }
         }
+        else
+        {
+            int rnd = UnityEngine.Random.RandomRange(min, selectedLeft.Count);
+
+            while (selectedRight.Count < count)
+            {
+                int randomNumber = UnityEngine.Random.RandomRange(min, max);
+
+                if (!selectedLeft.Contains(randomNumber))
+                {
+                    selectedRight.Add(randomNumber);
+                }
+            }
+            selectedRight[rnd]=selectedLeft[rnd];
+        }
+       
 
         for (int i = 0; i < leftSide.childCount; i++)
         {

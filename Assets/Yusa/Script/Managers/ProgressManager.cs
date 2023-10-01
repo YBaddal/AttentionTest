@@ -68,7 +68,7 @@ public class ProgressManager : MonoBehaviour
     }
     void SetCalendar()
     {
-        DateTime firstDayOfMonth = new DateTime(2023, 8, 1);
+        DateTime firstDayOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
         int fdom = GetIndexDayOfWeek(firstDayOfMonth.DayOfWeek);
 
         for (int i = 0; i < calendarDays.Count; i++)
