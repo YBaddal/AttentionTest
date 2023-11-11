@@ -20,7 +20,7 @@ public class Question15PrefabCell : MonoBehaviour
     {
         
     }
-    void GeneratePrefab()
+    public void GeneratePrefab()
     {
         int rndColorString = Random.RandomRange(0, colorStringList.Count);
         int rndColor = Random.RandomRange(0, colorList.Count);
@@ -39,9 +39,8 @@ public class Question15PrefabCell : MonoBehaviour
         }
         else
         {
-            if(rndColorString==rndColor)
+            while(rndColorString==rndColor)
             {
-                colorList.Remove(colorList[rndColorString]);
                 rndColor = Random.RandomRange(0, colorList.Count);
 
             }

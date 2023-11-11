@@ -73,6 +73,10 @@ public class GameManager : MonoBehaviour
         questManager.CloseAll();
         OpenPage(Page.Main);
     }
+    public void LoadLevel(int level)
+    {
+        Application.LoadLevel(level);
+    }
     public void OpenPage(Page page)
     {
         CloseAllPage();

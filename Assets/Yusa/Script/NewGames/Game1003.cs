@@ -24,7 +24,7 @@ public class Game1003 : MonoBehaviour
     {
 
     }
-     private void OnEnable()
+    private void OnEnable()
     {
         question = GetComponent<Question>();
         Init();

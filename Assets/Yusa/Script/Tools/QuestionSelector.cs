@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public class QuestionSelector : MonoBehaviour
 {
     public List<GameObject> gameList;
-    public Transform content;
+    public List<int> gameLevelCount;
+    public Transform content,gameContent;
     public GameObject contentPrefab;
     // Start is called before the first frame update
     void Start()
@@ -23,21 +24,28 @@ public class QuestionSelector : MonoBehaviour
     {
         for(int i = 0; i < gameList.Count; i++)
         {
-            Button obj = Instantiate(contentPrefab, content).GetComponent<Button>();
-            string order = (gameList[i].GetComponent<Question>().level + 1).ToString();
-            obj.GetComponentInChildren<Text>().text = gameList[i].gameObject.name + "-"+order;
-            int selected = i;
-            obj.onClick.AddListener(delegate { this.Open(selected); });
+            for(int j = 0; j < gameLevelCount[i]; j++)
+            {
+                int selected = i;
+                int level = j;
+                Button obj = Instantiate(contentPrefab, content).GetComponent<Button>();            
+                obj.GetComponentInChildren<Text>().text = gameList[i].gameObject.name + "-" + (level + 1);
+                obj.onClick.AddListener(delegate { this.Open(selected, level); });
+            }
         }
     }
-    public void Open(int selected)
+    public void Open(int selected,int level)
     {
         CloseAll();
-        gameList[selected].SetActive(true);
+        Question obj = Instantiate(gameList[selected], gameContent).GetComponent<Question>();
+        obj.level = level;
+        obj.enabled = true;
+        obj.gameObject.SetActive(true);
+        GameManager.instance.OpenPage(Page.Login);
     }
     public void CloseAll()
     {
-        foreach (GameObject game in gameList)
-            game.SetActive(false);
+        for(int i = gameContent.childCount-1;i>=0;i--)
+            Destroy(gameContent.GetChild(i).gameObject);
     }
 }

@@ -16,9 +16,11 @@ public class QuestManager : MonoBehaviour
     public Image howToImg;
     public Text howToText;
     public RecordResponse dailyGames;
+    public bool isTest;
     // Start is called before the first frame update
     void Start()
     {
+        if(!isTest)
         StartCoroutine(GetDailyGames(new GetDailyGameRequest { userId=GameManager.instance.user.userId,date= DateTime.Now.ToShortDateString() }));
     }
 
@@ -74,7 +76,13 @@ public class QuestManager : MonoBehaviour
     }
     public void FinishScreen()
     {
+       
+
         GameManager.instance.OpenPage(Page.QuizFinish);
+
+        if (isTest)
+            return;
+
         var toggles = GameManager.instance.pages[(int)Page.QuizFinish].GetComponentsInChildren<Toggle>();
 
         foreach (Toggle toggle in toggles)
