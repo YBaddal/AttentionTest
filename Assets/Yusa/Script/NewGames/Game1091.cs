@@ -12,22 +12,21 @@ public class Game1091 : MonoBehaviour
     public List<float> levelTimes;
     public AudioSource source;
     public AudioClip correctSound, wrongSound;
-
-    public List<Image> palette;
-    public List<Color> colors;
-    public Transform leftSide, rightSide;
-    public List<int> selectedLeft, selectedRight;
-    public Toggle leftToggle, rightToggle;
-    void Start()
-    {
-        for(int i = 0; i < palette.Count; i++)
-            palette[i].color = colors[i];
-    }
+    public int correctAnswer;
+    public List<Image> palette,questionPalette;
+    public List<Button> answerButtons, answerPalette;
+    public List<GameObject> cursors;
+    public GameObject paletteCursor,createObj,selectObj;
+    public int currenctCount;
+    public int selectedColor;
+    public List<Color> questionColors;
     private void OnEnable()
     {
         question = GetComponent<Question>();
+        questionColors = new List<Color>();
         Init();
         SetLevel();
+        SelectColor(0);
     }
     void EarnPoint()
     {
@@ -46,97 +45,94 @@ public class Game1091 : MonoBehaviour
         switch (level)
         {
             case 0:
-                PrepareLevel(21, 0, 50, true);
+                PrepareLevel(true,4,6);
                 break;
             case 1:
-                PrepareLevel(21, 0, 50, false);
+                PrepareLevel(false,5,8);
                 break;
             case 2:
-                PrepareLevel(20, 0, 50, true);
+                PrepareLevel(true,5,8);
                 break;
             case 3:
-                PrepareLevel(20, 0, 50, false);
+                PrepareLevel(false,6,9);
                 break;
             case 4:
-                PrepareLevel(23, 0, 50, true);
+                PrepareLevel(true,7,10);
+                break;
+            case 5:
+                PrepareLevel(false,7,11);
                 break;
             default:
-                PrepareLevel(23, 0, 50, false);
+                PrepareLevel(false, 7, 11);
                 break;
         }
     }
-    void PrepareLevel(int count, int min, int max, bool isAllSame)
+    void PrepareLevel(bool isSelect, int min,int max)
     {
-        while (selectedLeft.Count < count)
+        selectObj.SetActive(isSelect);
+        createObj.SetActive(!isSelect);
+        if (isSelect)
         {
-            int randomNumber = UnityEngine.Random.RandomRange(min, max);
+            cursors[currenctCount].SetActive(false);
+            currenctCount = currenctCount < min ? min : currenctCount + 1;
+            currenctCount = currenctCount > max ? max : currenctCount;
+            cursors[currenctCount].SetActive(true);
+            int startPos = Random.Range(0, palette.Count - currenctCount);
+            cursors[currenctCount].transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector2(50 * startPos, 0);
 
-            if (!selectedLeft.Contains(randomNumber))
-            {
-                selectedLeft.Add(randomNumber);
-            }
-        }
-        if (isAllSame)
-        {
-            selectedRight = selectedLeft;
-            bool diff = false;
-            while (!diff)
-            {
-                int rnd = UnityEngine.Random.RandomRange(min, selectedLeft.Count);
+            correctAnswer = Random.RandomRange(0, answerButtons.Count);
 
-                if (!selectedLeft.Contains(rnd))
+            //Fill Correct
+            for (int i = 0; i < answerButtons.Count; i++)
+            {
+                for (int j = 0; j < currenctCount; j++)
                 {
-                    selectedRight[0] = rnd;
-                    diff = true;
+                    answerButtons[i].transform.GetChild(j).gameObject.SetActive(true);
+                    if (correctAnswer == i)
+                    {
+                        answerButtons[i].transform.GetChild(j).GetComponent<Image>().color = palette[startPos + j].color;
+                    }
+                    else
+                    {
+                        int wrongStartPos = startPos;
+
+                        while (wrongStartPos == startPos)
+                        {
+                            wrongStartPos = Random.Range(0, palette.Count - currenctCount);
+                        }
+                        answerButtons[i].transform.GetChild(j).GetComponent<Image>().color = palette[wrongStartPos + j].color;
+                    }
                 }
             }
         }
         else
         {
-            int rnd = UnityEngine.Random.RandomRange(min, selectedLeft.Count);
+            currenctCount = currenctCount < min ? min : currenctCount + 1;
+            currenctCount = currenctCount > max ? max : currenctCount;
 
-            while (selectedRight.Count < count)
+            questionColors.Clear();
+            while (questionColors.Count < currenctCount)
             {
-                int randomNumber = UnityEngine.Random.RandomRange(min, max);
+                int rnd = Random.RandomRange(0, palette.Count);
 
-                if (!selectedLeft.Contains(randomNumber))
+                if (!questionColors.Contains(palette[rnd].color))
                 {
-                    selectedRight.Add(randomNumber);
+                    questionColors.Add(palette[rnd].color);
                 }
             }
-            selectedRight[rnd] = selectedLeft[rnd];
-        }
-
-
-        for (int i = 0; i < leftSide.childCount; i++)
-        {
-            int rndLeft = Random.RandomRange(0, leftSide.childCount);
-            int rndRight = Random.RandomRange(0, leftSide.childCount);
-
-            leftSide.GetChild(i).SetSiblingIndex(rndLeft);
-            rightSide.GetChild(i).SetSiblingIndex(rndRight);
-        }
-        for (int i = 0; i < leftSide.childCount; i++)
-        {
-            if (i < count)
+            for(int i = 0; i < questionColors.Count; i++)
             {
-                leftSide.GetChild(i).gameObject.SetActive(true);
-                rightSide.GetChild(i).gameObject.SetActive(true);
-                //leftSide.GetChild(i).GetComponent<Toggle>().image.sprite = spriteList[selectedLeft[i]];
-                //rightSide.GetChild(i).GetComponent<Toggle>().image.sprite = spriteList[selectedRight[i]];
-            }
-            else
-            {
-                leftSide.GetChild(i).gameObject.SetActive(false);
-                rightSide.GetChild(i).gameObject.SetActive(false);
+                questionPalette[i].gameObject.SetActive(true);
+                answerPalette[i].gameObject.SetActive(true);
+                questionPalette[i].color = questionColors[i];
             }
         }
-
+        
     }
 
-    public void CheckAnswer()
+    public void CheckAnswer(int answer)
     {
-        if (true)
+        if (answer==correctAnswer)
         {
             EarnPoint();
             source.PlayOneShot(correctSound);
@@ -144,25 +140,58 @@ public class Game1091 : MonoBehaviour
         else
             source.PlayOneShot(wrongSound);
 
+        question.questionTime++;
         Invoke("ResetLevel", 0.25f);
     }
-
-    public void SelectToggle()
+    public void CheckColors()
     {
-        ToggleGroup ltg = leftSide.GetComponent<ToggleGroup>();
-        leftToggle = ltg.GetFirstActiveToggle();
-        ToggleGroup rtg = rightSide.GetComponent<ToggleGroup>();
-        rightToggle = rtg.GetFirstActiveToggle();
+        int correctCount = 0;
+        for(int i = 0; i < currenctCount; i++)
+        {
+           if(questionPalette[i].color == answerPalette[i].image.color)
+              correctCount++;
+        }
 
-        if (leftToggle != null && rightToggle != null)
-            CheckAnswer();
+        if(correctCount==currenctCount)
+        {
+            EarnPoint();
+            source.PlayOneShot(correctSound);
+            question.questionTime++;
+            Invoke("ResetLevel", 0.25f);
+        }
+
+    }
+
+    public void Colorize(Image image)
+    {
+        image.color = palette[selectedColor].color;
+        CheckColors();
+    }
+    public void SelectColor(int color)
+    {
+        selectedColor = color;
+        paletteCursor.transform.GetComponent<RectTransform>().anchoredPosition = new Vector2(50 * selectedColor, 0);
+        ColorBlock cb = answerPalette[0].colors;
+        cb.highlightedColor = palette[selectedColor].color;
+        foreach (var answer in answerPalette)
+            answer.colors = cb;
     }
     void ResetLevel()
     {
-        leftSide.GetComponent<ToggleGroup>().SetAllTogglesOff();
-        rightSide.GetComponent<ToggleGroup>().SetAllTogglesOff();
-        leftToggle = null;
-        rightToggle = null;
+        for (int i = 0; i < answerButtons.Count; i++)
+        {
+            for (int j = 0; j < answerButtons[i].transform.childCount; j++)
+            {
+                answerButtons[i].transform.GetChild(j).gameObject.SetActive(false);
+            }
+        }
+        for (int i = 0; i < questionPalette.Count; i++)
+        {
+            answerPalette[i].image.color = Color.white;
+            questionPalette[i].color = Color.white;
+            answerPalette[i].gameObject.SetActive(false);
+            questionPalette[i].gameObject.SetActive(false);
+        }
         SetLevel();
     }
 }

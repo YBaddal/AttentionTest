@@ -142,6 +142,7 @@ public class Game1083 : MonoBehaviour
         else
             source.PlayOneShot(wrongSound);
 
+        question.questionTime++;
         Invoke("ResetLevel", 0.25f);
     }
 
